@@ -14,7 +14,7 @@ namespace WinFormClient
 {
     public partial class Form1 : Form
     {
-        TcpClient clientSocket = new();
+        TcpClient clientSocket = new TcpClient();
         NetworkStream stream = default(NetworkStream);
         string message = string.Empty;
 
@@ -42,7 +42,7 @@ namespace WinFormClient
             }
             message = "채팅 서버에 연결 되었습니다.";
             DisplayText(message);
-            byte[] buffer = Encoding.Unicode.GetBytes(textBox3.Text + "$");
+            byte[] buffer = Encoding.Unicode.GetBytes(textBox2.Text + "$");
             stream.Write(buffer, 0, buffer.Length);
             stream.Flush();
             Thread t_handler = new Thread(GetMessage);
@@ -95,6 +95,11 @@ namespace WinFormClient
             stream.Flush();
             Application.ExitThread();
             Environment.Exit(0);
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

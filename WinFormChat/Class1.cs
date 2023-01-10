@@ -19,7 +19,7 @@ namespace WinFormChat
             this.clientSocket = clientSocket;
             this.clientList = clientList;
 
-            Thread t_handler = new(doChat);
+            Thread t_handler = new Thread(doChat);
         }
 
         public delegate void MessageDisplayHandler(string message, string user_name);

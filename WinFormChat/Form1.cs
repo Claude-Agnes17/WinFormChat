@@ -20,18 +20,18 @@ namespace WinFormChat
         static int counter = 0;
         string date;
 
-        public Dictionary<TcpClient, string> clientList = new();
+        public Dictionary<TcpClient, string> clientList = new Dictionary<TcpClient, string>();
         public Form1()
         {
             InitializeComponent();
 
-            Thread t = new(InitSocket);
+            Thread t = new Thread(InitSocket);
             t.IsBackground = true;
             t.Start();
         }
         private void InitSocket()
         {
-            server = new(IPAddress.Any, 9999);
+            server = new TcpListener(IPAddress.Any, 9999);
             clientSocket = default(TcpClient);
             server.Start();
 
@@ -54,7 +54,7 @@ namespace WinFormChat
                     clientList.Add(clientSocket, user_name);
                     SendMessageAll(user_name + " 님이 입장하셨습니다.", "", false);
 
-                    Class1 h_client = new();
+                    Class1 h_client = new Class1();
                     h_client.OnReceived += new Class1.MessageDisplayHandler(OnReceived);
                     h_client.OnDisconnected += new Class1.DisconnectedHandler(h_client_OnDisconnected);
                     h_client.startClient(clientSocket, clientList);
